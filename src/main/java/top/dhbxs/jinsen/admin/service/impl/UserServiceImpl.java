@@ -3,11 +3,14 @@ package top.dhbxs.jinsen.admin.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import top.dhbxs.jinsen.admin.controller.dto.UserDto;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
 import top.dhbxs.jinsen.admin.mapper.UserMapper;
 import top.dhbxs.jinsen.admin.service.IUserService;
 import top.dhbxs.jinsen.admin.service.ex.InsertException;
+import top.dhbxs.jinsen.admin.service.ex.UserPasswordNotMatchException;
 import top.dhbxs.jinsen.admin.service.ex.UsernameDuplicatedException;
+import top.dhbxs.jinsen.admin.service.ex.UsernameNotFoundException;
 
 import java.util.Date;
 import java.util.UUID;
@@ -73,5 +76,34 @@ public class UserServiceImpl implements IUserService {
         }
         // 返回加密之后的密码
         return password;
+    }
+
+    @Override
+    public String login(UserDto user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
+
+        UserEntity result = userMapper.findByUsername(username);
+
+        System.out.println(result);
+
+        if (result == null) {
+            throw new UsernameNotFoundException("该用户尚未注册");
+        }
+
+        String oldPassword = result.getPassword();
+        String salt = result.getSalt();
+
+       String tempPassword = getMD5Password(password, salt);
+
+       if (!oldPassword.equals(tempPassword)) {
+           throw new UserPasswordNotMatchException("用户密码错误");
+       }
+
+//        String userToken = TokenUtils.genToken(result.getUid().toString(), result.getPassword());
+
+//        System.out.println(userToken);
+//        TokenUtils.genToken(); // 设置token
+        return "userToken";
     }
 }

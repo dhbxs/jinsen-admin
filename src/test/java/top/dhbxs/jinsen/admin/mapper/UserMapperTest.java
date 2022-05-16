@@ -36,7 +36,7 @@ public class UserMapperTest {
 
     @Test
     public void findByUsername() {
-        UserEntity user = userMapper.findByUsername("tim");
+        UserEntity user = userMapper.findByUsername("sunwukong1");
         System.out.println(user);
     }
 }

@@ -10,7 +10,7 @@
     <resultMap id="UserEntityMap" type="top.dhbxs.jinsen.admin.entity.UserEntity">
         <!--  在定义映射规则时，主键是不能省略的(id)  -->
         <!--  column 表的字段名 property 实体类字段  -->
-        <id column="u_id" property="uid"/>
+        <id column="uid" property="uid"/>
         <result column="is_delete" property="isDelete"/>
         <result column="created_time" property="createdTime"/>
         <result column="modified_time" property="modifiedTime"/>

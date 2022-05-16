@@ -1,10 +1,8 @@
 package top.dhbxs.jinsen.admin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.dhbxs.jinsen.admin.controller.dto.UserDto;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
 import top.dhbxs.jinsen.admin.service.IUserService;
 import top.dhbxs.jinsen.admin.util.JsonResult;
@@ -25,6 +23,19 @@ public class UserController extends BaseController {
     @PostMapping
     public JsonResult<Void> register(@RequestBody UserEntity user) {
         userService.register(user);
+        return new JsonResult<>(OK);
+    }
+
+    /**
+     * url GET: /users
+     * Get请求用来登录
+     *
+     * @param userDto 用户简化实体对象
+     * @return 返回Json对象
+     */
+    @GetMapping
+    public JsonResult<Void> login(@RequestBody UserDto userDto) {
+        String userToken = userService.login(userDto);
         return new JsonResult<>(OK);
     }
 }
