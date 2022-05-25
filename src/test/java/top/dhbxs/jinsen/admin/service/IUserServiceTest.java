@@ -5,8 +5,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import top.dhbxs.jinsen.admin.controller.dto.UserDto;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
 import top.dhbxs.jinsen.admin.service.ex.ServiceException;
+
+import java.util.List;
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class IUserServiceTest {
@@ -29,5 +33,26 @@ public class IUserServiceTest {
             // 获取异常的具体描述信息
             System.out.println(e.getMessage());
         }
+    }
+
+    @Test
+    public void getById() {
+        UserEntity user = iUserService.getById(12);
+        System.out.println(user);
+    }
+
+    @Test
+    public void login() {
+        UserDto userDto = new UserDto();
+        userDto.setUsername("sunwukong");
+        userDto.setPassword("123456");
+        UserDto result = iUserService.login(userDto);
+        System.out.println("----" + result);
+    }
+
+    @Test
+    public void getAllUser() {
+        List<UserEntity> allUser = iUserService.getAllUser();
+        System.out.println(allUser);
     }
 }

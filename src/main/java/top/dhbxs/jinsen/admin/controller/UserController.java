@@ -7,6 +7,8 @@ import top.dhbxs.jinsen.admin.entity.UserEntity;
 import top.dhbxs.jinsen.admin.service.IUserService;
 import top.dhbxs.jinsen.admin.util.JsonResult;
 
+import java.util.List;
+
 @RestController // 组合注解， 相当于@Controller + @ResponseBody
 @RequestMapping("/users")
 public class UserController extends BaseController {
@@ -21,9 +23,9 @@ public class UserController extends BaseController {
      * @return 返回Json对象
      */
     @PostMapping
-    public JsonResult<Void> register(@RequestBody UserEntity user) {
+    public JsonResult<Object> register(@RequestBody UserEntity user) {
         userService.register(user);
-        return new JsonResult<>(OK);
+        return new JsonResult<Object>(OK);
     }
 
     /**
@@ -34,8 +36,19 @@ public class UserController extends BaseController {
      * @return 返回Json对象
      */
     @GetMapping
-    public JsonResult<Void> login(@RequestBody UserDto userDto) {
-        String userToken = userService.login(userDto);
-        return new JsonResult<>(OK);
+    public JsonResult<UserDto> login(UserDto userDto) {
+        UserDto user = userService.login(userDto);
+        return new JsonResult<UserDto>(OK, user);
+    }
+
+    /**
+     * url GET : /users/getAll
+     * Get请求所有用户信息
+     * @return 返回封装好的Json对象
+     */
+    @GetMapping("/getAll")
+    public JsonResult<List<UserEntity>> getAllUser() {
+        List<UserEntity> user = userService.getAllUser();
+        return new JsonResult<List<UserEntity>>(OK, user);
     }
 }

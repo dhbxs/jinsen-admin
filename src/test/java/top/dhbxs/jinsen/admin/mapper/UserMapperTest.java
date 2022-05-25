@@ -34,9 +34,9 @@ public class UserMapperTest {
         System.out.println(rows);
     }
 
-    @Test
-    public void findByUsername() {
-        UserEntity user = userMapper.findByUsername("sunwukong1");
-        System.out.println(user);
-    }
+//    @Test
+//    public void findByUsername() {
+//        UserEntity user = userMapper.findByUsername("sunwukong1");
+//        System.out.println(user);
+//    }
 }

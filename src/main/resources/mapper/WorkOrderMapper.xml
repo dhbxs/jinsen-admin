@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace属性：用于指定当前的映射文件和哪个接口进行映射，需要指定接口文件路径，需要标注包的完整路径接口  -->
+<mapper namespace="top.dhbxs.jinsen.admin.mapper.WorkOrderMapper">
+    <!--  自定义映射规则：resultmap 标签完成映射关系  -->
+    <!--  id属性：标签给这个映射分配一个唯一的id值，对应的就是resultMap=“id属性的值”  -->
+    <!--  type属性：取值是一个类，表示的是数据库中的查询结果与java实体类的对应关系，即映射关系-->
+    <resultMap id="WorkOrderAndWildBillMap" type="top.dhbxs.jinsen.admin.entity.WorkOrderEntity">
+        <!--  在定义映射规则时，主键是不能省略的(id)  -->
+        <!--  column 表的字段名 property 实体类字段  -->
+        <id column="o_id" property="oId"/>
+        <result column="number" property="number"/>
+        <result column="plate" property="plate"/>
+
+        <collection property="wildBillEntities" ofType="top.dhbxs.jinsen.admin.entity.WildBillEntity">
+            <id column="w_id" property="wId"></id>
+            <result column="wood_type" property="woodType"></result>
+            <result column="diameter" property="diameter"></result>
+            <result column="amount" property="amount"></result>
+            <result column="acreage" property="acreage"></result>
+            <result column="length" property="length"></result>
+        </collection>
+    </resultMap>
+
+    <select id="getAllWorkOrderAndWildBill" resultMap="WorkOrderAndWildBillMap">
+        select work_order.o_id,
+               work_order.number,
+               work_order.plate,
+               wild_bill.w_id,
+               wild_bill.wood_type,
+               wild_bill.length,
+               wild_bill.diameter,
+               wild_bill.amount,
+               wild_bill.acreage
+        from work_order
+                 inner join wild_bill on work_order.number = wild_bill.number
+    </select>
+
+
+    <select id="getWorkOrderAndWildBillByNumber" resultMap="WorkOrderAndWildBillMap">
+        select work_order.o_id,
+               work_order.number,
+               work_order.plate,
+               wild_bill.w_id,
+               wild_bill.wood_type,
+               wild_bill.length,
+               wild_bill.diameter,
+               wild_bill.amount,
+               wild_bill.acreage
+        from work_order
+                 inner join wild_bill on work_order.number = wild_bill.number AND work_order.number = #{number}
+    </select>
+</mapper>
+
+
