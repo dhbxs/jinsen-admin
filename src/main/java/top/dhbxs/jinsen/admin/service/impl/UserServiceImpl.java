@@ -30,6 +30,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 用户注册业务逻辑
+     *
      * @param user 用户实体对象
      */
     @Override
@@ -81,6 +82,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * MD5给密码加密
+     *
      * @param password 明文密码
      * @param salt     随机盐值
      * @return 加密后的密码（密文）
@@ -97,6 +99,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 用户登录业务逻辑
+     *
      * @param user 用户实体对象
      * @return 用户实体
      */
@@ -135,6 +138,7 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 通过id查找用户
+     *
      * @param id 用户id
      * @return 找到的用户实体
      */
@@ -149,10 +153,51 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 获取所有的用户信息
+     *
      * @return 查询结果
      */
     @Override
     public List<UserEntity> getAllUser() {
-        return userMapper.selectList(null);
+        Integer itemLength;
+        List<UserEntity> userEntities = userMapper.selectList(null);
+        itemLength = userEntities.size();
+
+        return userEntities;
+    }
+
+    /**
+     * 更新单个用户的信息
+     *
+     * @param user 用户实体
+     */
+    @Override
+    public void updateUser(UserEntity user) {
+        // 判断用户是否有改密码 若用户修改了密码
+        if (!StrUtil.isBlank(user.getPassword())) {
+            // 密码加密处理 MD5算法加密
+            // 盐值 + password + 盐值 盐值是随机字符串
+            String oldPassword = user.getPassword();
+            // 获取盐值（随机生成）
+            String salt = UUID.randomUUID().toString().toUpperCase();
+            // 将密码和盐值作为整体做加密处理
+            String md5Password = getMD5Password(oldPassword, salt);
+            // 将加密后的密码重新补全到设置的user对象中，忽略密码的强度，提升安全性
+            user.setPassword(md5Password);
+            // 将盐值记录补全
+            user.setSalt(salt);
+        }
+        Date date = new Date();
+        user.setModifiedTime(date);
+        userMapper.updateById(user);
+    }
+
+    /**
+     * 通过id删除用户
+     *
+     * @param id 用户的id
+     */
+    @Override
+    public void deleteUserById(Integer id) {
+        userMapper.deleteById(id);
     }
 }

@@ -1,5 +1,6 @@
 package top.dhbxs.jinsen.admin.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -7,10 +8,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 /**
  * 上传文件实体类
  */
-@TableName("uplpad_file")
-public class UploadFileEntity {
+@TableName("upload_file")
+public class FileEntity {
 
-    @TableId(value = "f_id")
+    @TableId(value = "f_id", type = IdType.AUTO)
     // 上传文件表主键
     private Integer fId;
 
@@ -25,6 +26,16 @@ public class UploadFileEntity {
     @TableField(value = "recognition_id")
     // 识别后文件的id
     private Integer recognitionId;
+
+    public FileEntity() {
+    }
+
+    public FileEntity(Integer fId, String fileName, String filePath, Integer recognitionId) {
+        this.fId = fId;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.recognitionId = recognitionId;
+    }
 
     public Integer getfId() {
         return fId;
@@ -61,9 +72,9 @@ public class UploadFileEntity {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UploadFileEntity)) return false;
+        if (!(o instanceof FileEntity)) return false;
 
-        UploadFileEntity that = (UploadFileEntity) o;
+        FileEntity that = (FileEntity) o;
 
         if (getfId() != null ? !getfId().equals(that.getfId()) : that.getfId() != null) return false;
         if (getFileName() != null ? !getFileName().equals(that.getFileName()) : that.getFileName() != null)

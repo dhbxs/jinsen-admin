@@ -38,7 +38,7 @@
                  inner join wild_bill on work_order.number = wild_bill.number
     </select>
 
-
+    <!--  通过工单号查询野账数据并分页  -->
     <select id="getWorkOrderAndWildBillByNumber" resultMap="WorkOrderAndWildBillMap">
         select work_order.o_id,
                work_order.number,
@@ -51,6 +51,23 @@
                wild_bill.acreage
         from work_order
                  inner join wild_bill on work_order.number = wild_bill.number AND work_order.number = #{number}
+        limit #{pageNum}, #{pageSize}
+    </select>
+
+    <!--  所有野帐数据信息的分页查询  -->
+    <select id="findPage" resultMap="WorkOrderAndWildBillMap">
+        select work_order.o_id,
+               work_order.number,
+               work_order.plate,
+               wild_bill.w_id,
+               wild_bill.wood_type,
+               wild_bill.length,
+               wild_bill.diameter,
+               wild_bill.amount,
+               wild_bill.acreage
+        from work_order
+                 inner join wild_bill on work_order.number = wild_bill.number
+        limit #{pageNum}, #{pageSize}
     </select>
 </mapper>
 

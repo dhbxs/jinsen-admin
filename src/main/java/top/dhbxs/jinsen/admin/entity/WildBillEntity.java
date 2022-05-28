@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.util.Objects;
+
 /**
  * 野帐表实体类
  */
@@ -26,7 +28,7 @@ public class WildBillEntity {
 
     // 检尺直径
     @TableField(value = "diameter")
-    private Integer diameter;
+    private double diameter;
 
     // 根数
     @TableField(value = "amount")
@@ -34,11 +36,24 @@ public class WildBillEntity {
 
     // 材积
     @TableField(value = "acreage")
-    private Integer acreage;
+    private double acreage;
 
     // 检尺长
     @TableField(value = "length")
-    private Integer length;
+    private double length;
+
+    public WildBillEntity() {
+    }
+
+    public WildBillEntity(Integer wId, String number, String woodType, double diameter, Integer amount, double acreage, double length) {
+        this.wId = wId;
+        this.number = number;
+        this.woodType = woodType;
+        this.diameter = diameter;
+        this.amount = amount;
+        this.acreage = acreage;
+        this.length = length;
+    }
 
     public Integer getwId() {
         return wId;
@@ -64,11 +79,11 @@ public class WildBillEntity {
         this.woodType = woodType;
     }
 
-    public Integer getDiameter() {
+    public double getDiameter() {
         return diameter;
     }
 
-    public void setDiameter(Integer diameter) {
+    public void setDiameter(double diameter) {
         this.diameter = diameter;
     }
 
@@ -80,51 +95,45 @@ public class WildBillEntity {
         this.amount = amount;
     }
 
-    public Integer getAcreage() {
+    public double getAcreage() {
         return acreage;
     }
 
-    public void setAcreage(Integer acreage) {
+    public void setAcreage(double acreage) {
         this.acreage = acreage;
     }
 
-    public Integer getLength() {
+    public double getLength() {
         return length;
     }
 
-    public void setLength(Integer length) {
+    public void setLength(double length) {
         this.length = length;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof WildBillEntity)) return false;
-
+        if (o == null || getClass() != o.getClass()) return false;
         WildBillEntity that = (WildBillEntity) o;
-
-        if (getwId() != null ? !getwId().equals(that.getwId()) : that.getwId() != null) return false;
-        if (getNumber() != null ? !getNumber().equals(that.getNumber()) : that.getNumber() != null) return false;
-        if (getWoodType() != null ? !getWoodType().equals(that.getWoodType()) : that.getWoodType() != null)
-            return false;
-        if (getDiameter() != null ? !getDiameter().equals(that.getDiameter()) : that.getDiameter() != null)
-            return false;
-        if (getAmount() != null ? !getAmount().equals(that.getAmount()) : that.getAmount() != null) return false;
-        if (getAcreage() != null ? !getAcreage().equals(that.getAcreage()) : that.getAcreage() != null) return false;
-        return getLength() != null ? getLength().equals(that.getLength()) : that.getLength() == null;
+        return Double.compare(that.diameter, diameter) == 0 && Double.compare(that.acreage, acreage) == 0 && Double.compare(that.length, length) == 0 && Objects.equals(wId, that.wId) && Objects.equals(number, that.number) && Objects.equals(woodType, that.woodType) && Objects.equals(amount, that.amount);
     }
 
     @Override
     public int hashCode() {
-        int result = getwId() != null ? getwId().hashCode() : 0;
-        result = 31 * result + (getNumber() != null ? getNumber().hashCode() : 0);
-        result = 31 * result + (getWoodType() != null ? getWoodType().hashCode() : 0);
-        result = 31 * result + (getDiameter() != null ? getDiameter().hashCode() : 0);
-        result = 31 * result + (getAmount() != null ? getAmount().hashCode() : 0);
-        result = 31 * result + (getAcreage() != null ? getAcreage().hashCode() : 0);
-        result = 31 * result + (getLength() != null ? getLength().hashCode() : 0);
-        return result;
+        return Objects.hash(wId, number, woodType, diameter, amount, acreage, length);
     }
 
-
+    @Override
+    public String toString() {
+        return "WildBillEntity{" +
+                "wId=" + wId +
+                ", number='" + number + '\'' +
+                ", woodType='" + woodType + '\'' +
+                ", diameter=" + diameter +
+                ", amount=" + amount +
+                ", acreage=" + acreage +
+                ", length=" + length +
+                '}';
+    }
 }

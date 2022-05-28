@@ -1,7 +1,6 @@
 package top.dhbxs.jinsen.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 import top.dhbxs.jinsen.admin.entity.WorkOrderEntity;
 
 import java.util.List;
@@ -22,5 +21,14 @@ public interface WorkOrderMapper extends BaseMapper<WorkOrderEntity> {
      * @param number
      * @return
      */
-    WorkOrderEntity getWorkOrderAndWildBillByNumber(@Param("number") String number);
+    List<WorkOrderEntity> getWorkOrderAndWildBillByNumber(String number, Integer pageNum, Integer pageSize);
+
+    /**
+     * 分页查询野帐数据明细
+     * @param pageNum 当前页码
+     * @param pageSize 每页数据条数
+     * @return 返回查到的数据集合
+     */
+    List<WorkOrderEntity> findPage(Integer pageNum, Integer pageSize);
+
 }

@@ -9,6 +9,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   main:
     allow-bean-definition-overriding: true
+  mvc:
+    static-path-pattern: /static/**
 
 mybatis-plus:
   # 配置mapper扫描位置
@@ -16,3 +18,8 @@ mybatis-plus:
   configuration:
     # 配置控制台打印mybatis sql语句
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+files:
+  upload:
+    path: C:/Users/cooper/Desktop/BYSJ_code/upload/
+

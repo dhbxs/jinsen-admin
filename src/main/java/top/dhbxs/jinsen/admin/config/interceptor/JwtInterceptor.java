@@ -6,15 +6,15 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
-import top.dhbxs.jinsen.admin.service.IUserService;
 import top.dhbxs.jinsen.admin.service.ex.ServiceException;
 import top.dhbxs.jinsen.admin.service.ex.TokenErr;
 import top.dhbxs.jinsen.admin.service.ex.UsernameNotFoundException;
+import top.dhbxs.jinsen.admin.service.impl.UserServiceImpl;
+import top.dhbxs.jinsen.admin.util.SpringContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private IUserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -44,6 +42,8 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new TokenErr("token 验证失败");
         }
 
+        UserServiceImpl userService = SpringContextUtil.getBean(UserServiceImpl.class);
+//        System.out.println("***************************************" + userService);
         UserEntity user = userService.getById(Integer.valueOf(userId));
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在，请重新登录");

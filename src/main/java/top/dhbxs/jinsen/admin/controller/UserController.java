@@ -4,16 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.dhbxs.jinsen.admin.controller.dto.UserDto;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
+import top.dhbxs.jinsen.admin.mapper.UserMapper;
 import top.dhbxs.jinsen.admin.service.IUserService;
 import top.dhbxs.jinsen.admin.util.JsonResult;
 
 import java.util.List;
 
+/**
+ * 用户相关控制层类
+ */
 @RestController // 组合注解， 相当于@Controller + @ResponseBody
 @RequestMapping("/users")
 public class UserController extends BaseController {
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * url POST: /users
@@ -42,7 +49,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * url GET : /users/getAll
+     * url GET: /users/getAll
      * Get请求所有用户信息
      * @return 返回封装好的Json对象
      */
@@ -50,5 +57,40 @@ public class UserController extends BaseController {
     public JsonResult<List<UserEntity>> getAllUser() {
         List<UserEntity> user = userService.getAllUser();
         return new JsonResult<List<UserEntity>>(OK, user);
+    }
+
+    /**
+     * 后去用户信息的分页查询
+     * ?pageNum=1$pageSize=10
+     * @return
+     */
+    @GetMapping("/page")
+    public JsonResult<List<UserEntity>> getUserInfo(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+        pageNum = (pageNum - 1) * pageSize;
+        List<UserEntity> userNow = userMapper.findPage(pageNum, pageSize);
+//        System.out.println("99d9d9sa9sa9fsafsaf"+ userNow);
+        return new JsonResult<List<UserEntity>>(OK, userNow);
+    }
+
+    /**
+     * url POST: /users/update
+     * @param user 用户实体对象
+     * @return 返回状态码
+     */
+    @PostMapping("/update")
+    public JsonResult<Void> updateUser(@RequestBody UserEntity user) {
+        userService.updateUser(user);
+        return new JsonResult<Void>(OK);
+    }
+
+    /**
+     * url GET: /users/delete
+     * @param uid 用户id
+     * @return 返回状态码
+     */
+    @GetMapping("/delete")
+    public JsonResult<Void> deleteUser(Integer uid) {
+        userService.deleteUserById(uid);
+        return new JsonResult<Void>(OK);
     }
 }

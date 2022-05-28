@@ -55,4 +55,17 @@ public class IUserServiceTest {
         List<UserEntity> allUser = iUserService.getAllUser();
         System.out.println(allUser);
     }
+
+    @Test
+    public void updateUser() {
+        UserEntity user = new UserEntity();
+        user.setUid(26);
+        user.setEmail("1234@qq.com");
+        iUserService.updateUser(user);
+    }
+
+    @Test
+    public void deleteUserById() {
+        iUserService.deleteUserById(18);
+    }
 }

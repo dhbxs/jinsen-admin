@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import top.dhbxs.jinsen.admin.entity.WorkOrderEntity;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class WorkOrderMapperTest {
 
@@ -24,8 +22,8 @@ class WorkOrderMapperTest {
 
     @Test
     public void getWorkOrderAndWildBillByNumber() {
-        WorkOrderEntity workOrderAndWildBill = workOrderMapper.getWorkOrderAndWildBillByNumber("001");
+//        WorkOrderEntity workOrderAndWildBill = workOrderMapper.getWorkOrderAndWildBillByNumber();
 
-        System.out.println(workOrderAndWildBill);
+//        System.out.println(workOrderAndWildBill);
     }
 }

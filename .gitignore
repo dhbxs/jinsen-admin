@@ -31,4 +31,4 @@ build/
 
 ### VS Code ###
 .vscode/
-/vue-ui/node_modules/
+/upload/node_modules/

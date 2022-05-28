@@ -27,7 +27,7 @@ public class BaseController {
             result.setMessage("注册时产生未知的异常");
         } else if (e instanceof UserPasswordNotMatchException) {
             result.setState(4001);
-            result.setMessage("用户名或密码错误");
+            result.setMessage("用户密码错误");
         } else if (e instanceof UsernameNotFoundException) {
             result.setState(4002);
             result.setMessage("该用户尚未注册");

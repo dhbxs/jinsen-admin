@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--  namespace属性：用于指定当前的映射文件和哪个接口进行映射，需要指定接口文件路径，需要标注包的完整路径接口  -->
+<mapper namespace="top.dhbxs.jinsen.admin.mapper.UserMapper">
+    <!--  自定义映射规则：resultmap 标签完成映射关系  -->
+    <!--  id属性：标签给这个映射分配一个唯一的id值，对应的就是resultMap=“id属性的值”  -->
+    <!--  type属性：取值是一个类，表示的是数据库中的查询结果与java实体类的对应关系，即映射关系-->
+    <resultMap id="UserEntityMap" type="top.dhbxs.jinsen.admin.entity.UserEntity">
+        <!--  在定义映射规则时，主键是不能省略的(id)  -->
+        <!--  column 表的字段名 property 实体类字段  -->
+        <id column="uid" property="uid"/>
+        <result column="username" property="username"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="gender" property="gender"/>
+    </resultMap>
+
+    <!--  user信息的分页查询  -->
+    <select id="findPage" resultMap="UserEntityMap">
+        select uid, username, phone, email, gender
+        from user
+        limit #{pageNum}, #{pageSize}
+    </select>
+</mapper>
+

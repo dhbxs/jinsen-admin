@@ -34,4 +34,16 @@ public interface IUserService {
      * @return 查询结果
      */
     List<UserEntity> getAllUser();
+
+    /**
+     * 更新单个用户的信息
+     * @param user
+     */
+    void updateUser(UserEntity user);
+
+    /**
+     * 删除用户
+     * @param id 用户的id
+     */
+    void deleteUserById(Integer id);
 }

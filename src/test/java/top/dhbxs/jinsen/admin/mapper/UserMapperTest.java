@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.dhbxs.jinsen.admin.entity.UserEntity;
 
+import java.util.List;
+
 // 表示当前是一个测试类，不会随项目一起打包
 @SpringBootTest
 // 需要手动导包 表示启动这个单元测试类（如果没有，单元测试类是不能运行的），需要传递一个参数，必须是SoringRunner.class类型
@@ -39,4 +41,9 @@ public class UserMapperTest {
 //        UserEntity user = userMapper.findByUsername("sunwukong1");
 //        System.out.println(user);
 //    }
+    @Test
+    public void findPage() {
+        List<UserEntity> userEntities = userMapper.findPage(0, 1);
+        System.out.println(userEntities);
+    }
 }
