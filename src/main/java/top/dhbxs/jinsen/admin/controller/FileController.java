@@ -5,10 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.dhbxs.jinsen.admin.entity.FileEntity;
 import top.dhbxs.jinsen.admin.service.IFileService;
@@ -16,6 +13,7 @@ import top.dhbxs.jinsen.admin.util.JsonResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 文件相关操作控制层
@@ -63,11 +61,23 @@ public class FileController extends BaseController{
         FileEntity fileEntity = new FileEntity();
 
         fileEntity.setFileName(fileName);
-        fileEntity.setFilePath(fileUploadPath);
+        // 把转变后的路径存到数据库
+        fileEntity.setFilePath("http://localhost:8080/upload/" + fileName);
         fileEntity.setRecognitionId(1);
 
         iFileService.fileUpload(fileEntity);
 
-        return new JsonResult<String>(OK, "C:/Users/cooper/Desktop/BYSJ_code/upload/" + fileName);
+        return new JsonResult<String>(OK, "http://localhost:8080/upload/" + fileName);
+    }
+
+
+    /**
+     * 查询所有文件接口
+     * @return 文件实体集合
+     */
+    @GetMapping("/getAll")
+    public JsonResult<List<FileEntity>> getAllFile() {
+        List<FileEntity> allFile = iFileService.getAllFile();
+        return new JsonResult<>(OK, allFile);
     }
 }

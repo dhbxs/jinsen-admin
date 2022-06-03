@@ -42,8 +42,9 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new TokenErr("token 验证失败");
         }
 
+        // 获得对象
         UserServiceImpl userService = SpringContextUtil.getBean(UserServiceImpl.class);
-//        System.out.println("***************************************" + userService);
+        // 调用userService中通过用户id从数据库中查找用户
         UserEntity user = userService.getById(Integer.valueOf(userId));
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在，请重新登录");

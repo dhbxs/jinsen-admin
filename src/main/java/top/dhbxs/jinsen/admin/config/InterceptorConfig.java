@@ -21,7 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         patterns.add("/users/update");
         patterns.add("/users/delete");
         patterns.add("/wild-order/getAll");
-        patterns.add("/file/upload");
+        patterns.add("/file/**");
         patterns.add("/error");
         patterns.add("/static/**");
         patterns.add("/users/page");
